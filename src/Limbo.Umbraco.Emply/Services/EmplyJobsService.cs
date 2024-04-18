@@ -307,8 +307,9 @@ public class EmplyJobsService {
         // exception if the node name is longer, so we need to truncate the name. As we add the job ID to the end of
         // the name, we also need to take this into account when truncating as we'd otherwise still end up with a
         // node name that is too long
-        int maxLength = 255 - item.JobId.ToString().Length - 3;
-        string nodeName = $"{item.Title} ({item.JobId})";
+        string title = item.JobId.ToString().Trim();
+        int maxLength = 255 - title.Length - 3;
+        string nodeName = $"{title} ({item.JobId})";
         if (nodeName.Length > maxLength) nodeName = $"{nodeName[..(maxLength - 3)]}...";
 
         try {
@@ -398,7 +399,7 @@ public class EmplyJobsService {
 
         if (settings.TitleProperty is not null) {
             string? oldTitle = content.GetValue<string>(settings.TitleProperty.Alias);
-            string newTitle = item.Title.ToString();
+            string newTitle = item.Title.ToString().Trim();
             SetValueIfModified(content, settings.TitleProperty, oldTitle, newTitle, ref modified);
         }
 
