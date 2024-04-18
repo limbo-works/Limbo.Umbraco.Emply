@@ -307,9 +307,8 @@ public class EmplyJobsService {
         // exception if the node name is longer, so we need to truncate the name. As we add the job ID to the end of
         // the name, we also need to take this into account when truncating as we'd otherwise still end up with a
         // node name that is too long
-        string title = item.JobId.ToString().Trim();
-        int maxLength = 255 - title.Length - 3;
-        string nodeName = $"{title} ({item.JobId})";
+        int maxLength = 255 - item.JobId.ToString().Length - 3;
+        string nodeName = $"{item.Title.ToString().Trim()} ({item.JobId})";
         if (nodeName.Length > maxLength) nodeName = $"{nodeName[..(maxLength - 3)]}...";
 
         try {
