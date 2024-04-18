@@ -285,7 +285,7 @@ public class EmplyJobsService {
     /// <param name="job">The job.</param>
     public virtual void WriteToLog(EmplyImportResult job) {
 
-        string path = Path.Combine(global::Umbraco.Cms.Core.Constants.SystemDirectories.LogFiles, EmplyPackage.Alias, $"{DateTime.UtcNow:yyyyMMddHHmmss}.txt");
+        string path = Path.Combine(global::Umbraco.Cms.Core.Constants.SystemDirectories.LogFiles, EmplyPackage.Alias, $"{DateTime.UtcNow:yyyyMMddHHmmss}.json");
 
         string fullPath = _webHostEnvironment.MapPathContentRoot(path);
 
