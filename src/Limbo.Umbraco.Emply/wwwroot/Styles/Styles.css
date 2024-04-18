@@ -1,3 +1,33 @@
-﻿.test {
-  color: red;
+﻿.limbo-emply table.table.details {
+  margin-top: 20px;
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+.limbo-emply table.table.details em {
+  color: #999;
+}
+.limbo-emply table.table.details th {
+  padding: 10px;
+  color: #000;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.limbo-emply table.table.details td {
+  padding: 10px;
+}
+.limbo-emply table.table.details code {
+  padding: 2px;
+  font-size: 12px;
+}
+.limbo-emply table.table.details th.fw,
+.limbo-emply table.table.details td.fw {
+  width: 100%;
+}
+.limbo-emply table.table.details .enabled {
+  font-weight: bold;
+  color: #4caf50 !important;
+}
+.limbo-emply table.table.details .disabled {
+  font-weight: bold;
+  color: #f44336 !important;
 }

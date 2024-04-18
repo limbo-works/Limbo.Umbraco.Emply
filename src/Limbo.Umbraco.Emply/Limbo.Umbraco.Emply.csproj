@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net6</TargetFramework>
     <StaticWebAssetBasePath>App_Plugins/$(AssemblyName)</StaticWebAssetBasePath>
     <Nullable>enable</Nullable>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,13 +30,39 @@
     <RepositoryUrl>https://github.com/limbo-works/Limbo.Umbraco.Emply</RepositoryUrl>
   </PropertyGroup>
 
+  <!-- Include additional metadata in the assembly -->
+  <ItemGroup>
+    <AssemblyMetadata Include="PackageProjectUrl" Value="https://packages.limbo.works/limbo.umbraco.emply/" />
+    <AssemblyMetadata Include="DocumentationUrl" Value="https://packages.limbo.works/limbo.umbraco.emply/docs/v10/" />
+    <AssemblyMetadata Include="NuGetUrl" Value="https://www.nuget.org/packages/Limbo.Umbraco.Emply" />
+    <AssemblyMetadata Include="UmbracoMarketplaceUrl" Value="https://marketplace.umbraco.com/package/limbo.umbraco.emply" />
+  </ItemGroup>
+
   <!-- Include NuGet dependencies -->
   <ItemGroup>
+    <PackageReference Include="Limbo.Integrations.Emply" Version="1.0.0-beta003" />
     <PackageReference Include="Skybrud.Essentials" Version="1.1.56" />
     <PackageReference Include="Skybrud.Essentials.Http" Version="1.2.0" />
+    <PackageReference Include="Skybrud.Essentials.Umbraco" Version="10.0.0" />
     <PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="[10.0.0,12.999)" />
     <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
+  </ItemGroup>
+  <!-- Include backoffice assets -->
+  <ItemGroup>
+    <Content Remove="wwwroot\**\*" />
+    <Content Remove="compilerconfig.json" />
+    <Content Include="wwwroot\**\*.css" />
+    <Content Include="wwwroot\**\*.html" />
+    <Content Include="wwwroot\**\*.js" />
+    <Content Include="wwwroot\Lang\*.xml" />
+    <None Include="wwwroot\**\*.less" />
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <!-- Include package icon for NuGet -->
+  <ItemGroup>
+    <Content Include="../build/Limbo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <!-- Generate XML documentation -->

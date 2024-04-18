@@ -18,6 +18,9 @@ public class EmplyManifestFilter : IManifestFilter {
             Scripts = new[] {
                 "/App_Plugins/Limbo.Umbraco.Emply/Scripts/Controllers/JobData.js",
                 "/App_Plugins/Limbo.Umbraco.Emply/Scripts/Controllers/Timestamp.js"
+            },
+            Stylesheets = new [] {
+                "/App_Plugins/Limbo.Umbraco.Emply/Styles/Styles.css"
             }
         };
 
