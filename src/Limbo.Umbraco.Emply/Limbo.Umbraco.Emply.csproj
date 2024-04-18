@@ -56,6 +56,7 @@
     <Content Include="wwwroot\**\*.html" />
     <Content Include="wwwroot\**\*.js" />
     <Content Include="wwwroot\Lang\*.xml" />
+    <Content Include="wwwroot\BackOffice\Icons\*.svg" />
     <None Include="wwwroot\**\*.less" />
     <None Include="compilerconfig.json" />
   </ItemGroup>
