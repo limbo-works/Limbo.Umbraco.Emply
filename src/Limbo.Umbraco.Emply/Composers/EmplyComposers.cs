@@ -22,6 +22,8 @@ public class EmplyComposer : IComposer {
 
         builder.Services.AddSingleton<EmplyJobsService>();
         builder.Services.AddSingleton<EmplyJobDataPropertyIndexValueFactory>();
+        builder.Services.AddSingleton<EmplyModelFactory>();
+
         builder.Services.AddOptions<EmplySettings>().Configure<IConfiguration>(ConfigureEmply);
 
         builder.ManifestFilters().Append<EmplyManifestFilter>();
