@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.Signatur.svg)](https://www.nuget.org/packages/Limbo.Umbraco.Emply)
 <!--[![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.emply)-->
 
-Umbraco integration for the Emply API.
+**Limbo.Umbraco.Emply** is an Umbraco package serving as an integration between our [**Limbo.Integrations.Emply**](https://github.com/limbo-works/Limbo.Integrations.Emply/) package and Umbraco. The package supports importing job postings in Umbraco via a scheduled task.
 
 <table>
   <tr>
