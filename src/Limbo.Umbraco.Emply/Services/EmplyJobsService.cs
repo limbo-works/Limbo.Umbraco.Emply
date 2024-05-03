@@ -309,7 +309,7 @@ public class EmplyJobsService {
         // node name that is too long
         int maxLength = 255 - item.JobId.ToString().Length - 3;
         string nodeName = $"{item.Title.ToString().Trim()} ({item.JobId})";
-        if (nodeName.Length > maxLength) nodeName = $"{nodeName[..(maxLength - 3)]} ({{item.JobId})...";
+        if (nodeName.Length > maxLength) nodeName = $"{nodeName[..(maxLength - 3)]} ({item.JobId})...";
 
         try {
 
