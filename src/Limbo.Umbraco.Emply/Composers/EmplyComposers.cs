@@ -38,8 +38,8 @@ public class EmplyComposer : IComposer {
 
         IConfigurationSection section = configuration.GetSection("Limbo:Emply");
 
-        settings.ImportUserId = StringUtils.ParseInt32(section.GetSection("ImportUserId")?.Value, settings.ImportUserId);
-        settings.LogResults = StringUtils.ParseBoolean(section.GetSection("LogResults")?.Value, settings.LogResults);
+        settings.ImportUserId = StringUtils.ParseInt32(section.GetSection("ImportUserId").Value, settings.ImportUserId);
+        settings.LogResults = StringUtils.ParseBoolean(section.GetSection("LogResults").Value, settings.LogResults);
 
         ParseFeeds(section, settings);
         ParseScheduling(section, settings);
@@ -48,16 +48,15 @@ public class EmplyComposer : IComposer {
 
     private static void ParseFeeds(IConfiguration section, EmplySettings settings) {
 
-        IConfigurationSection? feeds = section.GetSection("Feeds");
-        if (feeds == null) return;
+        IConfigurationSection feeds = section.GetSection("Feeds");
 
         foreach (IConfigurationSection child in feeds.GetChildren()) {
 
             // Read from properties from their respective child sections
-            string? customerName = child.GetSection("CustomerName")?.Value;
-            string? apiKey = child.GetSection("ApiKey")?.Value;
-            Guid? parentContentKey = child.GetSection("ParentContentKey")?.Value.ToGuid();
-            string? contentTypeAlias = child.GetSection("ContentTypeAlias")?.Value;
+            string? customerName = child.GetSection("CustomerName").Value;
+            string? apiKey = child.GetSection("ApiKey").Value;
+            Guid? parentContentKey = child.GetSection("ParentContentKey").Value.ToGuid();
+            string? contentTypeAlias = child.GetSection("ContentTypeAlias").Value;
 
             // Validate required properties
             if (string.IsNullOrWhiteSpace(customerName)) throw new Exception("Feed does not specify a customer name.");
@@ -73,13 +72,12 @@ public class EmplyComposer : IComposer {
 
     private static void ParseScheduling(IConfiguration section, EmplySettings settings) {
 
-        IConfigurationSection? scheduling = section.GetSection("Scheduling");
-        if (scheduling == null) return;
+        IConfigurationSection scheduling = section.GetSection("Scheduling");
 
-        settings.Scheduling.Enabled = (section.GetSection("Enabled")?.Value).ToBoolean(true);
+        settings.Scheduling.Enabled = (section.GetSection("Enabled").Value).ToBoolean(true);
 
-        string? delay = scheduling.GetSection("Delay")?.Value;
-        string? interval = scheduling.GetSection("Interval")?.Value;
+        string? delay = scheduling.GetSection("Delay").Value;
+        string? interval = scheduling.GetSection("Interval").Value;
 
         if (int.TryParse(delay, out int delayMinutes)) {
             settings.Scheduling.Delay = TimeSpan.FromMinutes(delayMinutes);

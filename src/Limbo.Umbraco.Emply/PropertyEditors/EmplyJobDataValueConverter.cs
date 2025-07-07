@@ -25,8 +25,7 @@ public class EmplyJobDataValueConverter : PropertyValueConverterBase {
     }
 
     public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {
-        if (inter is not JObject json) return null;
-        return _modelFactory.ConvertJobData(owner, propertyType, EmplyPosting.Parse(json));
+        return inter is not JObject json ? null : _modelFactory.ConvertJobData(owner, propertyType, EmplyPosting.Parse(json));
     }
 
     public override Type GetPropertyValueType(IPublishedPropertyType propertyType) {

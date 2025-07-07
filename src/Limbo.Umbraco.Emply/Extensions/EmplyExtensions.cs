@@ -15,12 +15,12 @@ public static class EmplyExtensions {
 
     public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, long value) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, new object[] { value }));
+        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, [value]));
     }
 
     public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, string value) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, new object[] { value }));
+        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, [value]));
     }
 
     public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, DateTimeOffset value) {

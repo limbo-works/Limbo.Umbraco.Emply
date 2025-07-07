@@ -15,7 +15,7 @@ public class EmplySettings {
     /// <summary>
     /// Gets or sets a list of the job sources to be imported in Umbraco.
     /// </summary>
-    public List<EmplySourceSettings> Sources { get; set; } = new();
+    public List<EmplySourceSettings> Sources { get; set; } = [];
 
     /// <summary>
     /// gets or sets the options for scheduling (aka the import background task).

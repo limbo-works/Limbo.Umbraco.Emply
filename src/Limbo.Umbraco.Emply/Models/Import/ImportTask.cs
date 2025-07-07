@@ -36,7 +36,7 @@ public class ImportTask {
     public string? Message { get; set; }
 
     [JsonProperty("items", Order = 998)]
-    public List<ImportTask> Items = new();
+    public List<ImportTask> Items = [];
 
     #region Constructors
 

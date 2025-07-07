@@ -27,7 +27,7 @@ public class EmplyJobDataPropertyIndexValueFactory : IPropertyIndexValueFactory 
         if (json[0] == '_') json = json[1..];
 
         // Add the property value (XML serialized string) to the index
-        yield return new KeyValuePair<string, IEnumerable<object?>>(property.Alias, new[] { json });
+        yield return new KeyValuePair<string, IEnumerable<object?>>(property.Alias, [json]);
 
         // Parse the raw JSON into an 'EmplyPosting' instance
         EmplyPosting posting = JsonUtils.ParseJsonObject(json, EmplyPosting.Parse);

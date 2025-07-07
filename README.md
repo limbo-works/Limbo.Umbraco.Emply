@@ -15,13 +15,13 @@
   <tr>
     <td><strong>Umbraco:</strong></td>
     <td>
-      Umbraco 10, 11 and 12
+      Umbraco 13
     </td>
   </tr>
   <tr>
     <td><strong>Target Framework:</strong></td>
     <td>
-      .NET 6
+      .NET 8
     </td>
   </tr>
 </table>
@@ -35,18 +35,18 @@
 
 ## Installation
 
-**Umbraco 10+**  
+**Umbraco 13+**  
 
-Version 10 of this package supports Umbraco version 10, 11, and 12. The package is only available via [**NuGet**](https://www.nuget.org/packages/Limbo.Umbraco.Emply).
+Version 13 of this package supports Umbraco version 13. The package is only available via [**NuGet**](https://www.nuget.org/packages/Limbo.Umbraco.Emply).
 
 To install the package, you can use either the .NET CLI:
 
 ```
-dotnet add package Limbo.Umbraco.Emply --version 10.0.0
+dotnet add package Limbo.Umbraco.Emply --version 13.0.0-alpha001
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.Emply -Version 10.0.0
+Install-Package Limbo.Umbraco.Emply -Version 13.0.0-alpha001
 ```

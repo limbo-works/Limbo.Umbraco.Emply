@@ -327,7 +327,7 @@ public class EmplyJobsService {
             // Update the Umbraco properties based on the job item
             bool modified = UpdateProperties(item, content, nodeName, task, settings, content.Id == 0);
 
-            // Save and published the content item if we detecthed any changes
+            // Save and published the content item if we detected any changes
             if (modified) {
                 if (settings.Write) _contentService.SaveAndPublish(content, userId: _settings.ImportUserId);
                 if (isNew) {
