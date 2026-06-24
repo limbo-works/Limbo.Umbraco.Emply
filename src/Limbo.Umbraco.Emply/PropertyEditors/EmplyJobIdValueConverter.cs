@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Skybrud.Essentials.Strings.Extensions;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -8,7 +8,7 @@ namespace Limbo.Umbraco.Emply.PropertyEditors;
 public class EmplyJobIdValueConverter : PropertyValueConverterBase {
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias == EmplyJobIdEditor.EditorAlias;
+        return propertyType.EditorAlias == EmplyJobIdEditor.EditorAlias || propertyType.EditorUiAlias == EmplyJobIdEditor.EditorAlias;
     }
 
     public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {

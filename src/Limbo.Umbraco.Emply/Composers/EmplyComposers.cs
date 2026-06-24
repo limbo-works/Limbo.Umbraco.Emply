@@ -26,8 +26,6 @@ public class EmplyComposer : IComposer {
 
         builder.Services.AddOptions<EmplySettings>().Configure<IConfiguration>(ConfigureEmply);
 
-        builder.ManifestFilters().Append<EmplyManifestFilter>();
-
         if (builder.Config.GetBoolean("Limbo:Emply:Scheduling:Enabled", true)) {
             builder.Services.AddHostedService<EmplyRecurringTask>();
         }
@@ -74,7 +72,7 @@ public class EmplyComposer : IComposer {
 
         IConfigurationSection scheduling = section.GetSection("Scheduling");
 
-        settings.Scheduling.Enabled = (section.GetSection("Enabled").Value).ToBoolean(true);
+        settings.Scheduling.Enabled = scheduling.GetSection("Enabled").Value.ToBoolean(true);
 
         string? delay = scheduling.GetSection("Delay").Value;
         string? interval = scheduling.GetSection("Interval").Value;

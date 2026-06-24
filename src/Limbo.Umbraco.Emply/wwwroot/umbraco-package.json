@@ -1,0 +1,53 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Limbo Emply",
+  "id": "Limbo.Umbraco.Emply",
+  "version": "17.0.0-alpha001",
+  "extensions": [
+    {
+      "type": "propertyEditorUi",
+      "alias": "Limbo.Umbraco.Emply.PropertyEditorUi.JobData",
+      "name": "Limbo Emply Job Data Property Editor UI",
+      "element": "/App_Plugins/Limbo.Umbraco.Emply/Scripts/PropertyEditors/job-data.element.js",
+      "elementName": "limbo-umbraco-emply-job-data-property-editor",
+      "meta": {
+        "label": "Limbo Emply Job Data",
+        "icon": "icon-code",
+        "group": "Limbo",
+        "propertyEditorSchemaAlias": "Limbo.Umbraco.Emply.JobData"
+      }
+    },
+    {
+      "type": "propertyEditorUi",
+      "alias": "Limbo.Umbraco.Emply.PropertyEditorUi.JobId",
+      "name": "Limbo Emply Job ID Property Editor UI",
+      "element": "/App_Plugins/Limbo.Umbraco.Emply/Scripts/PropertyEditors/job-id.element.js",
+      "elementName": "limbo-umbraco-emply-job-id-property-editor",
+      "meta": {
+        "label": "Limbo Emply Job ID",
+        "icon": "icon-key",
+        "group": "Limbo",
+        "propertyEditorSchemaAlias": "Limbo.Umbraco.Emply.JobId"
+      }
+    },
+    {
+      "type": "propertyEditorUi",
+      "alias": "Limbo.Umbraco.Emply.PropertyEditorUi.LastUpdated",
+      "name": "Limbo Emply Last Updated Property Editor UI",
+      "element": "/App_Plugins/Limbo.Umbraco.Emply/Scripts/PropertyEditors/last-updated.element.js",
+      "elementName": "limbo-umbraco-emply-last-updated-property-editor",
+      "meta": {
+        "label": "Limbo Emply Last Updated",
+        "icon": "icon-time",
+        "group": "Limbo",
+        "propertyEditorSchemaAlias": "Limbo.Umbraco.Emply.LastUpdated"
+      }
+    },
+    {
+      "type": "icons",
+      "alias": "Limbo.Umbraco.Emply.Icons",
+      "name": "Limbo Emply Icons",
+      "js": "/App_Plugins/Limbo.Umbraco.Emply/BackOffice/Icons/icons.js"
+    }
+  ]
+}

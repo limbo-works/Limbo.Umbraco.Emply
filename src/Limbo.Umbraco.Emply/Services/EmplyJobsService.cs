@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -329,7 +329,7 @@ public class EmplyJobsService {
 
             // Save and published the content item if we detected any changes
             if (modified) {
-                if (settings.Write) _contentService.SaveAndPublish(content, userId: _settings.ImportUserId);
+                if (settings.Write) SaveAndPublishContent(content);
                 if (isNew) {
                     task.AppendToMessage($"Successfully created and published content item with ID '{content.Id}'...").SetAction(ImportAction.Added);
                 } else {
@@ -349,6 +349,12 @@ public class EmplyJobsService {
 
         }
 
+    }
+
+
+    protected virtual void SaveAndPublishContent(IContent content) {
+        _contentService.Save(content, _settings.ImportUserId);
+        _contentService.Publish(content, [], _settings.ImportUserId);
     }
 
     /// <summary>

@@ -3,7 +3,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Limbo.Umbraco.Emply.PropertyEditors;
 
-[DataEditor(EditorAlias, EditorName, EditorView, ValueType = ValueTypes.Json, Group = "Limbo", Icon = EditorIcon)]
+[DataEditor(EditorAlias, ValueType = ValueTypes.Json)]
 public class EmplyJobDataEditor : DataEditor {
 
     private readonly EmplyJobDataPropertyIndexValueFactory _indexValueFactory;
@@ -16,7 +16,7 @@ public class EmplyJobDataEditor : DataEditor {
 
     internal const string EditorView = "/App_Plugins/Limbo.Umbraco.Emply/Views/JobData.html";
 
-    internal const string EditorIcon = "icon-limbo-emply color-limbo";
+    internal const string EditorIcon = "icon-code";
 
     #endregion
 

@@ -2,7 +2,7 @@
 
 namespace Limbo.Umbraco.Emply.PropertyEditors;
 
-[DataEditor(EditorAlias, EditorName, EditorView, ValueType = ValueTypes.String, Group = "Limbo", Icon = EditorIcon)]
+[DataEditor(EditorAlias, ValueType = ValueTypes.String)]
 public class EmplyLastUpdatedEditor : DataEditor {
 
     #region Constants
@@ -13,7 +13,7 @@ public class EmplyLastUpdatedEditor : DataEditor {
 
     internal const string EditorView = "/App_Plugins/Limbo.Umbraco.Emply/Views/Timestamp.html";
 
-    internal const string EditorIcon = "icon-limbo-emply color-limbo";
+    internal const string EditorIcon = "icon-time";
 
     #endregion
 
