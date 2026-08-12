@@ -1,6 +1,7 @@
 using System;
 using Limbo.Umbraco.Emply.Extensions;
 using Limbo.Umbraco.Emply.Factories;
+using Limbo.Umbraco.Emply.Manifests;
 using Limbo.Umbraco.Emply.Models.Settings;
 using Limbo.Umbraco.Emply.Scheduling;
 using Limbo.Umbraco.Emply.Services;
@@ -11,6 +12,9 @@ using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Essentials.Time.Iso8601;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Infrastructure.Manifest;
+
+#pragma warning disable 1591
 
 namespace Limbo.Umbraco.Emply.Composers;
 
@@ -25,6 +29,8 @@ public class EmplyComposer : IComposer {
         builder.Services.AddSingleton<EmplyModelFactory>();
 
         builder.Services.AddOptions<EmplySettings>().Configure<IConfiguration>(ConfigureEmply);
+
+        builder.Services.AddSingleton<IPackageManifestReader, EmplyPackageManifestReader>();
 
         if (builder.Config.GetBoolean("Limbo:Emply:Scheduling:Enabled", true)) {
             builder.Services.AddHostedService<EmplyRecurringTask>();

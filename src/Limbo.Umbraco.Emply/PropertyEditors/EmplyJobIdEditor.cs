@@ -7,13 +7,7 @@ public class EmplyJobIdEditor : DataEditor {
 
     #region Constants
 
-    internal const string EditorAlias = "Limbo.Umbraco.Emply.JobId";
-
-    internal const string EditorName = "Limbo Emply Job ID";
-
-    internal const string EditorView = "/App_Plugins/Limbo.Umbraco.Emply/Views/JobId.html";
-
-    internal const string EditorIcon = "icon-key";
+    public const string EditorAlias = "Limbo.Umbraco.Emply.JobId";
 
     #endregion
 

@@ -1,11 +1,30 @@
 const template = document.createElement("template");
+
 template.innerHTML = `
   <style>
-    :host { display: block; }
-    .box { display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border: 1px solid #d8d7d9; border-radius: 3px; background: #f9f7f7; font-family: inherit; }
-    .muted { color: #817f85; }
+    :host {
+      display: block;
+    }
+
+    .box {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid #d8d7d9;
+      border-radius: 3px;
+      background: #f9f7f7;
+      font-family: inherit;
+    }
+
+    .muted {
+      color: #817f85;
+    }
   </style>
-  <div class="box"><span id="value" class="muted">N/A</span></div>
+
+  <div class="box">
+    <span id="value" class="muted">N/A</span>
+  </div>
 `;
 
 class LimboUmbracoEmplyJobIdPropertyEditor extends HTMLElement {
@@ -27,18 +46,29 @@ class LimboUmbracoEmplyJobIdPropertyEditor extends HTMLElement {
       this.#root = this.attachShadow({ mode: "open" });
       this.#root.appendChild(template.content.cloneNode(true));
     }
+
     this.#render();
   }
 
   #render() {
-    if (!this.#root) return;
+    if (!this.#root) {
+      return;
+    }
+
     const element = this.#root.getElementById("value");
     const value = this.#value ?? "";
+
     element.textContent = value === "" ? "N/A" : value;
     element.classList.toggle("muted", value === "");
   }
 
 }
 
-customElements.define("limbo-umbraco-emply-job-id-property-editor", LimboUmbracoEmplyJobIdPropertyEditor);
-export { LimboUmbracoEmplyJobIdPropertyEditor as element };
+customElements.define(
+  "limbo-umbraco-emply-job-id-property-editor",
+  LimboUmbracoEmplyJobIdPropertyEditor
+);
+
+export {
+  LimboUmbracoEmplyJobIdPropertyEditor as element
+};

@@ -10,7 +10,7 @@ public class EmplySettings {
     /// <summary>
     /// Gets or sets the numeric ID of the backoffice user that should be set as responsible for the import actions (save and publish).
     /// </summary>
-    public int ImportUserId { get; set; }
+    public int ImportUserId { get; set; } = global::Umbraco.Cms.Core.Constants.Security.SuperUserId;
 
     /// <summary>
     /// Gets or sets a list of the job sources to be imported in Umbraco.
