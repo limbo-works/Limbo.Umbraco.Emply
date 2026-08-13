@@ -10,7 +10,7 @@
 <table>
   <tr>
     <td><strong>License:</strong></td>
-    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v10/main/LICENSE.md"><strong>MIT License</strong></a></td>
+    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v17/main/LICENSE.md"><strong>MIT License</strong></a></td>
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
