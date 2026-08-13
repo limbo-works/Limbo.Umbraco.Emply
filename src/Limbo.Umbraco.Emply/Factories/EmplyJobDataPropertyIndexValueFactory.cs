@@ -38,12 +38,8 @@ public class EmplyJobDataPropertyIndexValueFactory : IPropertyIndexValueFactory 
         EmplyPosting posting = JsonUtils.ParseJsonObject(json, EmplyPosting.Parse);
 
         // Delegate the rest of the work to the jobs service
-        foreach (KeyValuePair<string, IEnumerable<object?>> pair in _emplyJobsService.GetIndexValues(property, posting, culture, segment, published)) {
-            yield return new IndexValue {
-                Culture = culture,
-                FieldName = pair.Key,
-                Values = pair.Value
-            };
+        foreach (IndexValue value in _emplyJobsService.GetIndexValues(property, posting, culture, segment, published)) {
+            yield return value;
         }
 
     }

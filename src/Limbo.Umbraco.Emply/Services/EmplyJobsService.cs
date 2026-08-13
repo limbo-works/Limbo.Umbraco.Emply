@@ -19,6 +19,7 @@ using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Time;
 using Umbraco.Cms.Core.Extensions;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 
 namespace Limbo.Umbraco.Emply.Services;
@@ -254,37 +255,25 @@ public class EmplyJobsService {
 
         return job.Completed();
 
-
-
     }
 
-    public virtual List<KeyValuePair<string, IEnumerable<object?>>> GetIndexValues(
-     IProperty property,
-     EmplyPosting item,
-     string? culture,
-     string? segment,
-     bool published
- ) {
+    public virtual List<IndexValue> GetIndexValues(IProperty property, EmplyPosting item, string? culture, string? segment, bool published) {
 
-        List<KeyValuePair<string, IEnumerable<object?>>> list = [];
+        List<IndexValue> list = [];
 
-        void Add(string fieldName, params object?[] values) {
-            list.Add(new KeyValuePair<string, IEnumerable<object?>>(fieldName, values));
-        }
-
-        Add($"{property.Alias}_jobId", item.JobId);
+        list.Add($"{property.Alias}_jobId", item.JobId, culture);
 
         if (item.TryGetData(x => x.Title.ToString() == EmplyAliases.Stillingskategori, out EmplyJobDataType1? categoryData)) {
             foreach (EmplyDataLocalizedValue category in categoryData.Value) {
-                Add($"{property.Alias}_category", category.Title.ToString());
-                Add($"{property.Alias}_category_search", category.Id.ToString("N"));
+                list.Add($"{property.Alias}_category", category.Title.ToString(), culture);
+                list.Add($"{property.Alias}_category_search", category.Id.ToString("N"), culture);
             }
         }
 
-        Add($"{property.Alias}_title", item.Title.ToString());
+        list.Add($"{property.Alias}_title", item.Title.ToString(), culture);
 
         if (item.DeadlineUtc is not null) {
-            Add($"{property.Alias}_deadline", item.DeadlineUtc.ToLocalTime().DateTimeOffset);
+            list.Add($"{property.Alias}_deadline", item.DeadlineUtc.ToLocalTime().DateTimeOffset, culture);
         }
 
         return list;

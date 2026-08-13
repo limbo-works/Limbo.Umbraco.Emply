@@ -8,29 +8,30 @@ using Limbo.Integrations.Emply.Models.Postings;
 using Microsoft.Extensions.Configuration;
 using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Essentials.Time;
+using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Limbo.Umbraco.Emply.Extensions;
 
 public static class EmplyExtensions {
 
-    public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, long value) {
+    internal static void Add(this List<IndexValue> list, string key, long value, string? culture = null) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, [value]));
+        list.Add(new IndexValue { FieldName = key, Values = [value], Culture = culture });
     }
 
-    public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, string value) {
+    internal static void Add(this List<IndexValue> list, string key, string value, string? culture = null) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(new KeyValuePair<string, IEnumerable<object?>>(key, [value]));
+        list.Add(new IndexValue { FieldName = key, Values = [value], Culture = culture });
     }
 
-    public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, DateTimeOffset value) {
+    internal static void Add(this List<IndexValue> list, string key, DateTimeOffset value, string? culture = null) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(key, value.ToString("yyyyMMddHHmmss000", CultureInfo.InvariantCulture));
+        list.Add(new IndexValue { FieldName = key, Values = [value.ToString("yyyyMMddHHmmss000", CultureInfo.InvariantCulture)], Culture = culture });
     }
 
-    public static void Add(this List<KeyValuePair<string, IEnumerable<object?>>> list, string key, EssentialsTime value) {
+    internal static void Add(this List<IndexValue> list, string key, EssentialsTime value, string? culture = null) {
         // TODO: consider moving to the "Skybrud.Essentials.Umbraco" package
-        list.Add(key, value.DateTimeOffset.ToString("yyyyMMddHHmmss000", CultureInfo.InvariantCulture));
+        list.Add(new IndexValue { FieldName = key, Values = [value.DateTimeOffset.ToString("yyyyMMddHHmmss000", CultureInfo.InvariantCulture)], Culture = culture });
     }
 
     public static bool TryGetData(this EmplyPosting posting, Func<EmplyJobData, bool> predicate, [NotNullWhen(true)] out EmplyJobData? result) {
