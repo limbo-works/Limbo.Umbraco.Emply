@@ -42,11 +42,11 @@ Version 17 of this package supports Umbraco version 17. The package is only avai
 To install the package, you can use either the .NET CLI:
 
 ```
-dotnet add package Limbo.Umbraco.Emply --version 17.0.0-alpha000
+dotnet add package Limbo.Umbraco.Emply --version 17.0.0-alpha001
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.Emply -Version 17.0.0-alpha000
+Install-Package Limbo.Umbraco.Emply -Version 17.0.0-alpha001
 ```
