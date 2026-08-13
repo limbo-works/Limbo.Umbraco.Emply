@@ -87,8 +87,8 @@ public class EmplyJobsService {
             }
 
             switch (propertyType.PropertyEditorAlias) {
-                case EmplyJobDataEditor.EditorAlias: dataProperty = propertyType; break;
-                case EmplyLastUpdatedEditor.EditorAlias: lastUpdatedProperty = propertyType; break;
+                case EmplyJobDataPropertyEditor.EditorAlias: dataProperty = propertyType; break;
+                case EmplyLastUpdatedPropertyEditor.EditorAlias: lastUpdatedProperty = propertyType; break;
             }
 
             switch (propertyType.Alias) {
@@ -112,7 +112,7 @@ public class EmplyJobsService {
         task11.AppendToMessage($"Found Emply job ID property with alias '{idProperty.Alias}'...");
 
         if (dataProperty == null) {
-            task11.AppendToMessage($"Required property with property editor '{EmplyJobDataEditor.EditorAlias}' not found for content type '{contentType.Alias}'.").Failed();
+            task11.AppendToMessage($"Required property with property editor '{EmplyJobDataPropertyEditor.EditorAlias}' not found for content type '{contentType.Alias}'.").Failed();
             return job;
         }
 

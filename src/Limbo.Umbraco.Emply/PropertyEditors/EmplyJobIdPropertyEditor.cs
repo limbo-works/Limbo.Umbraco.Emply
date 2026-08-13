@@ -3,7 +3,7 @@
 namespace Limbo.Umbraco.Emply.PropertyEditors;
 
 [DataEditor(EditorAlias, ValueType = ValueTypes.Integer)]
-public class EmplyJobIdEditor : DataEditor {
+public class EmplyJobIdPropertyEditor : DataEditor {
 
     #region Constants
 
@@ -13,7 +13,7 @@ public class EmplyJobIdEditor : DataEditor {
 
     #region Constructors
 
-    public EmplyJobIdEditor(IDataValueEditorFactory dataValueEditorFactory) : base(dataValueEditorFactory) { }
+    public EmplyJobIdPropertyEditor(IDataValueEditorFactory dataValueEditorFactory) : base(dataValueEditorFactory) { }
 
     #endregion
 

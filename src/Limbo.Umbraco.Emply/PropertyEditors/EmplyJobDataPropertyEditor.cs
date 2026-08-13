@@ -4,7 +4,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 namespace Limbo.Umbraco.Emply.PropertyEditors;
 
 [DataEditor(EditorAlias, ValueType = ValueTypes.Json)]
-public class EmplyJobDataEditor : DataEditor {
+public class EmplyJobDataPropertyEditor : DataEditor {
 
     private readonly EmplyJobDataPropertyIndexValueFactory _indexValueFactory;
 
@@ -16,7 +16,7 @@ public class EmplyJobDataEditor : DataEditor {
 
     #region Constructors
 
-    public EmplyJobDataEditor(IDataValueEditorFactory dataValueEditorFactory, EmplyJobDataPropertyIndexValueFactory indexValueFactory) : base(dataValueEditorFactory) {
+    public EmplyJobDataPropertyEditor(IDataValueEditorFactory dataValueEditorFactory, EmplyJobDataPropertyIndexValueFactory indexValueFactory) : base(dataValueEditorFactory) {
         _indexValueFactory = indexValueFactory;
     }
 

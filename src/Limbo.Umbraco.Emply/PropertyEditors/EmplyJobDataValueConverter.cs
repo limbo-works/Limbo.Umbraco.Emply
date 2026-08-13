@@ -17,7 +17,7 @@ public class EmplyJobDataValueConverter : PropertyValueConverterBase {
     }
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias == EmplyJobDataEditor.EditorAlias || propertyType.EditorUiAlias == EmplyJobDataEditor.EditorAlias;
+        return propertyType.EditorAlias == EmplyJobDataPropertyEditor.EditorAlias || propertyType.EditorUiAlias == EmplyJobDataPropertyEditor.EditorAlias;
     }
 
     public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {

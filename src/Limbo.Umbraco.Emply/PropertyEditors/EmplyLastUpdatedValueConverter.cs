@@ -8,7 +8,7 @@ namespace Limbo.Umbraco.Emply.PropertyEditors;
 public class EmplyLastUpdatedValueConverter : PropertyValueConverterBase {
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias == EmplyLastUpdatedEditor.EditorAlias || propertyType.EditorUiAlias == EmplyLastUpdatedEditor.EditorAlias;
+        return propertyType.EditorAlias == EmplyLastUpdatedPropertyEditor.EditorAlias || propertyType.EditorUiAlias == EmplyLastUpdatedPropertyEditor.EditorAlias;
     }
 
     public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {
