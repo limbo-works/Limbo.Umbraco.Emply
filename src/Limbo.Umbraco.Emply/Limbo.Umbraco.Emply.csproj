@@ -58,14 +58,12 @@
   <!-- Include backoffice assets -->
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
-    <Content Remove="compilerconfig.json" />
     <Content Include="wwwroot\**\*.css" />
     <Content Include="wwwroot\**\*.html" />
     <Content Include="wwwroot\**\*.json" />
     <Content Include="wwwroot\**\*.js" />
     <Content Include="wwwroot\Lang\*.xml" />
     <None Include="wwwroot\**\*.less" />
-    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <!-- Include package icon for NuGet -->
