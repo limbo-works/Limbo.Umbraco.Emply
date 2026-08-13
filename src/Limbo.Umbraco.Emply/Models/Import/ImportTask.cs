@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Newtonsoft.Json;
-using Skybrud.Essentials.Json.Converters.Time;
+using Skybrud.Essentials.Time;
 
 #pragma warning disable 1591
 
@@ -20,7 +20,7 @@ public class ImportTask {
     public string? Name { get; set; }
 
     [JsonProperty("duration")]
-    [JsonConverter(typeof(TimeSpanSecondsConverter))]
+    [JsonConverter(typeof(Skybrud.Essentials.Json.Newtonsoft.Converters.Time.TimeSpanConverter), TimeSpanFormat.Seconds)]
     public TimeSpan? Duration { get; set; }
 
     [JsonProperty("exception")]
