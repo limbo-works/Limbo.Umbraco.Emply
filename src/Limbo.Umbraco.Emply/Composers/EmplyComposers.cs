@@ -1,5 +1,4 @@
 using System;
-using Limbo.Umbraco.Emply.Extensions;
 using Limbo.Umbraco.Emply.Factories;
 using Limbo.Umbraco.Emply.Manifests;
 using Limbo.Umbraco.Emply.Models.Settings;
@@ -7,6 +6,7 @@ using Limbo.Umbraco.Emply.Scheduling;
 using Limbo.Umbraco.Emply.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Skybrud.Essentials.Configuration;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Essentials.Time.Iso8601;

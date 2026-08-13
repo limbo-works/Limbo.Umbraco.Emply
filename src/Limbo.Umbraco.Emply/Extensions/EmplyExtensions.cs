@@ -5,8 +5,6 @@ using System.Globalization;
 using System.Linq;
 using Limbo.Integrations.Emply.Models.Jobs;
 using Limbo.Integrations.Emply.Models.Postings;
-using Microsoft.Extensions.Configuration;
-using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Essentials.Time;
 using Umbraco.Cms.Core.PropertyEditors;
 
@@ -44,21 +42,6 @@ public static class EmplyExtensions {
         // TODO: consider moving to the "Limbo.Integrations.Emply" package
         result = posting.Data.OfType<T>().FirstOrDefault(predicate);
         return result != null;
-    }
-
-    public static bool GetBoolean(this IConfiguration configuration, string key) {
-        // TODO: consider moving to the "Skybrud.Essentials.AspNetCore" package
-        return (configuration.GetSection(key)?.Value).ToBoolean();
-    }
-
-    public static bool GetBoolean(this IConfiguration configuration, string key, bool fallback) {
-        // TODO: consider moving to the "Skybrud.Essentials.AspNetCore" package
-        return (configuration.GetSection(key)?.Value).ToBoolean(fallback);
-    }
-
-    public static bool? GetBooleanOrNull(this IConfiguration configuration, string key) {
-        // TODO: consider moving to the "Skybrud.Essentials.AspNetCore" package
-        return (configuration.GetSection(key)?.Value).ToBooleanOrNull();
     }
 
 }
