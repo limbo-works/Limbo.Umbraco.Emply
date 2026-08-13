@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Skybrud.Essentials.Time;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -8,11 +8,12 @@ namespace Limbo.Umbraco.Emply.PropertyEditors;
 public class EmplyLastUpdatedValueConverter : PropertyValueConverterBase {
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias == EmplyLastUpdatedEditor.EditorAlias;
+        return propertyType.EditorAlias == EmplyLastUpdatedPropertyEditor.EditorAlias || propertyType.EditorUiAlias == EmplyLastUpdatedPropertyEditor.EditorAlias;
     }
 
     public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {
-        return source is string str ? str[1..] : null;
+        if (source is not string str || string.IsNullOrWhiteSpace(str)) return null;
+        return str[0] == '_' ? str[1..] : str;
     }
 
     public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {

@@ -36,4 +36,19 @@ public static class EmplyPackage {
     /// </summary>
     public static readonly SemVersion SemVersion = InformationalVersion;
 
+    /// <summary>
+    /// Gets the URL of the GitHub repository for this package.
+    /// </summary>
+    public const string GitHubUrl = "https://github.com/limbo-works/Limbo.Umbraco.Emply";
+
+    /// <summary>
+    /// Gets the URL of the issue tracker for this package.
+    /// </summary>
+    public const string IssuesUrl = "https://github.com/limbo-works/Limbo.Umbraco.Emply/issues";
+
+    /// <summary>
+    /// Gets the URL of the documentation for this package.
+    /// </summary>
+    public const string DocumentationUrl = "https://packages.limbo.works/limbo.umbraco.emply/v17/docs/";
+
 }

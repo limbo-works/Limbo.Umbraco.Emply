@@ -1,14 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using Limbo.Integrations.Emply;
+using Limbo.Integrations.Emply.Extensions;
 using Limbo.Integrations.Emply.Models.Data.Values;
 using Limbo.Integrations.Emply.Models.Jobs;
 using Limbo.Integrations.Emply.Models.Postings;
 using Limbo.Umbraco.Emply.Constants;
-using Limbo.Umbraco.Emply.Extensions;
 using Limbo.Umbraco.Emply.Models.Import;
 using Limbo.Umbraco.Emply.Models.Settings;
 using Limbo.Umbraco.Emply.PropertyEditors;
@@ -18,8 +17,10 @@ using Newtonsoft.Json;
 using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Time;
+using Skybrud.Essentials.Umbraco.Search.Indexing;
 using Umbraco.Cms.Core.Extensions;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 
 namespace Limbo.Umbraco.Emply.Services;
@@ -86,8 +87,8 @@ public class EmplyJobsService {
             }
 
             switch (propertyType.PropertyEditorAlias) {
-                case EmplyJobDataEditor.EditorAlias: dataProperty = propertyType; break;
-                case EmplyLastUpdatedEditor.EditorAlias: lastUpdatedProperty = propertyType; break;
+                case EmplyJobDataPropertyEditor.EditorAlias: dataProperty = propertyType; break;
+                case EmplyLastUpdatedPropertyEditor.EditorAlias: lastUpdatedProperty = propertyType; break;
             }
 
             switch (propertyType.Alias) {
@@ -108,25 +109,25 @@ public class EmplyJobsService {
             return job;
         }
 
-        task11.AppendToMessage($"Found Signatur job ID property with alias '{idProperty.Alias}'...");
+        task11.AppendToMessage($"Found Emply job ID property with alias '{idProperty.Alias}'...");
 
         if (dataProperty == null) {
-            task11.AppendToMessage($"Required property with property editor '{EmplyJobDataEditor.EditorAlias}' not found for content type '{contentType.Alias}'.").Failed();
+            task11.AppendToMessage($"Required property with property editor '{EmplyJobDataPropertyEditor.EditorAlias}' not found for content type '{contentType.Alias}'.").Failed();
             return job;
         }
 
-        task11.AppendToMessage($"Found Signatur job data property with alias '{dataProperty.Alias}'...");
+        task11.AppendToMessage($"Found Emply job data property with alias '{dataProperty.Alias}'...");
 
         if (lastUpdatedProperty == null) {
-            task11.AppendToMessage("Signatur last updated property not found. Skipping as not mandatory...");
+            task11.AppendToMessage("Emply last updated property not found. Skipping as not mandatory...");
         } else {
-            task11.AppendToMessage($"Found Signatur last updated property with alias '{lastUpdatedProperty.Alias}'...");
+            task11.AppendToMessage($"Found Emply last updated property with alias '{lastUpdatedProperty.Alias}'...");
         }
 
         if (titleProperty == null) {
-            task11.AppendToMessage("Title property not found. Skipping as not mandatory...");
+            task11.AppendToMessage("Emply title property not found. Skipping as not mandatory...");
         } else {
-            task11.AppendToMessage($"Found title property with alias '{titleProperty.Alias}'...");
+            task11.AppendToMessage($"Found Emply title property with alias '{titleProperty.Alias}'...");
         }
 
         EmplyImportJobsSettings settings = new(options, parent, contentType, idProperty, dataProperty, lastUpdatedProperty, titleProperty);
@@ -255,25 +256,26 @@ public class EmplyJobsService {
 
         return job.Completed();
 
-
-
     }
 
-    public virtual List<KeyValuePair<string, IEnumerable<object?>>> GetIndexValues(IProperty property, EmplyPosting item, string? culture, string? segment, bool published) {
+    public virtual List<IndexValue> GetIndexValues(IProperty property, EmplyPosting item, string? culture, string? segment, bool published) {
 
-        List<KeyValuePair<string, IEnumerable<object?>>> list = new() {
-            { $"{property.Alias}_jobId", item.JobId }
-        };
+        List<IndexValue> list = [];
+
+        list.Add($"{property.Alias}_jobId", item.JobId, culture);
 
         if (item.TryGetData(x => x.Title.ToString() == EmplyAliases.Stillingskategori, out EmplyJobDataType1? categoryData)) {
             foreach (EmplyDataLocalizedValue category in categoryData.Value) {
-                list.Add($"{property.Alias}_category", category.Title.ToString());
-                list.Add($"{property.Alias}_category_search", category.Id.ToString("N"));
+                list.Add($"{property.Alias}_category", category.Title.ToString(), culture);
+                list.Add($"{property.Alias}_category_search", category.Id.ToString("N"), culture);
             }
         }
 
-        list.Add($"{property.Alias}_title", item.Title.ToString());
-        if (item.DeadlineUtc is not null) list.Add($"{property.Alias}_deadline", item.DeadlineUtc.ToLocalTime().DateTimeOffset);
+        list.Add($"{property.Alias}_title", item.Title.ToString(), culture);
+
+        if (item.DeadlineUtc is not null) {
+            list.Add($"{property.Alias}_deadline", item.DeadlineUtc.ToLocalTime().DateTimeOffset, culture);
+        }
 
         return list;
 
@@ -327,9 +329,9 @@ public class EmplyJobsService {
             // Update the Umbraco properties based on the job item
             bool modified = UpdateProperties(item, content, nodeName, task, settings, content.Id == 0);
 
-            // Save and published the content item if we detecthed any changes
+            // Save and published the content item if we detected any changes
             if (modified) {
-                if (settings.Write) _contentService.SaveAndPublish(content, userId: _settings.ImportUserId);
+                if (settings.Write) SaveAndPublishContent(content);
                 if (isNew) {
                     task.AppendToMessage($"Successfully created and published content item with ID '{content.Id}'...").SetAction(ImportAction.Added);
                 } else {
@@ -351,76 +353,92 @@ public class EmplyJobsService {
 
     }
 
+
+    protected virtual void SaveAndPublishContent(IContent content) {
+        _contentService.Save(content, _settings.ImportUserId);
+        _contentService.Publish(content, [], _settings.ImportUserId);
+    }
+
     /// <summary>
     /// Updates the properties of a job to be added or updated.
     /// </summary>
-    /// <param name="item">An item representing the job item in the Signatur RSS feed.</param>
+    /// <param name="item">An item representing the job item in the Emply RSS feed.</param>
     /// <param name="content">The <see cref="IContent"/> representing the job in Umbraco.</param>
     /// <param name="nodeName">The node name.</param>
     /// <param name="task">The parent task.</param>
     /// <param name="settings">The settings for this run of the import.</param>
     /// <param name="isNew">Whether <paramref name="content"/> is new - aka the first time the job is being added</param>
     /// <returns><see langword="true"/> if any properties were modified; otherwise, <see langword="false"/>.</returns>
-    protected virtual bool UpdateProperties(EmplyPosting item, IContent content, string nodeName, ImportTask task, EmplyImportJobsSettings settings, bool isNew) {
+    protected virtual bool UpdateProperties(
+     EmplyPosting item,
+     IContent content,
+     string nodeName,
+     ImportTask task,
+     EmplyImportJobsSettings settings,
+     bool isNew
+ ) {
 
         bool modified = false;
 
         string? oldName = content.Name;
 
-        // Did the node name change?
         if (oldName != nodeName) {
             content.Name = nodeName;
             modified = true;
         }
 
-        // If the content item hasn't been created yet, we should make sure to set the job ID
         if (content.Id == 0) {
             content.SetValue(settings.IdProperty.Alias, item.JobId);
             modified = true;
         }
 
-        // Has the data changed?
         string? oldData = isNew ? null : content.GetValue<string>(settings.DataProperty.Alias);
         string newData = $"_{item.JObject.ToString(Formatting.None)}";
+
         SetValueIfModified(content, settings.DataProperty.Alias, oldData, newData, ref modified);
 
         if (settings.LastUpdatedProperty is not null) {
-            if (isNew) {
-                content.SetValue(settings.LastUpdatedProperty.Alias, $"_{EssentialsTime.UtcNow.Iso8601}");
-            } else {
-                string? value = content.GetValue<string>(settings.LastUpdatedProperty.Alias);
-                if (string.IsNullOrWhiteSpace(value)) {
-                    modified = true;
-                }
-                content.SetValue(settings.LastUpdatedProperty.Alias, $"_{EssentialsTime.UtcNow.Iso8601}");
-            }
+            string newLastUpdated = $"_{EssentialsTime.UtcNow.Iso8601}";
+            string? oldLastUpdated = isNew ? null : content.GetValue<string>(settings.LastUpdatedProperty.Alias);
+
+            SetValueIfModified(content, settings.LastUpdatedProperty.Alias, oldLastUpdated, newLastUpdated, ref modified);
         }
 
         if (settings.TitleProperty is not null) {
             string? oldTitle = content.GetValue<string>(settings.TitleProperty.Alias);
             string newTitle = item.Title.ToString().Trim();
+
             SetValueIfModified(content, settings.TitleProperty, oldTitle, newTitle, ref modified);
         }
 
-        // Return whether the content item was modified
         return modified || content.Id == 0;
 
     }
 
-    protected void SetValueIfModified<T>(IContent content, IPropertyType property, T? oldValue, T? newValue, ref bool modified) {
+    protected void SetValueIfModified<T>(
+        IContent content,
+        IPropertyType property,
+        T? oldValue,
+        T? newValue,
+        ref bool modified
+    ) {
         SetValueIfModified(content, property.Alias, oldValue, newValue, ref modified);
     }
 
-    protected void SetValueIfModified<T>(IContent content, string propertyAlias, T? oldValue, T? newValue, ref bool modified) {
-        if (Equals(oldValue, newValue)) return;
+    protected void SetValueIfModified<T>(
+        IContent content,
+        string propertyAlias,
+        T? oldValue,
+        T? newValue,
+        ref bool modified
+    ) {
+        if (Equals(oldValue, newValue)) {
+            return;
+        }
+
         content.SetValue(propertyAlias, newValue);
         modified = true;
     }
-
-    protected virtual string StripHtml(string html) {
-        return string.IsNullOrWhiteSpace(html) ? string.Empty : Regex.Replace(html, "<.*?>", " ");
-    }
-
     #endregion
 
 }

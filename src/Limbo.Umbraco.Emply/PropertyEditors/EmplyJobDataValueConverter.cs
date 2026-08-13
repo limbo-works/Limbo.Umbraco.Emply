@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Limbo.Integrations.Emply.Models.Postings;
 using Limbo.Umbraco.Emply.Factories;
 using Newtonsoft.Json.Linq;
@@ -17,16 +17,17 @@ public class EmplyJobDataValueConverter : PropertyValueConverterBase {
     }
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias == EmplyJobDataEditor.EditorAlias;
+        return propertyType.EditorAlias == EmplyJobDataPropertyEditor.EditorAlias || propertyType.EditorUiAlias == EmplyJobDataPropertyEditor.EditorAlias;
     }
 
     public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {
-        return source is not string json || !json.StartsWith("_{") ? null : JsonUtils.ParseJsonObject(json[1..]);
+        if (source is not string json || string.IsNullOrWhiteSpace(json)) return null;
+        if (json[0] == '_') json = json[1..];
+        return json.StartsWith('{') ? JsonUtils.ParseJsonObject(json) : null;
     }
 
     public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {
-        if (inter is not JObject json) return null;
-        return _modelFactory.ConvertJobData(owner, propertyType, EmplyPosting.Parse(json));
+        return inter is not JObject json ? null : _modelFactory.ConvertJobData(owner, propertyType, EmplyPosting.Parse(json));
     }
 
     public override Type GetPropertyValueType(IPublishedPropertyType propertyType) {

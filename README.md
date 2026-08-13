@@ -1,6 +1,6 @@
 ﻿# Limbo Emply
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v10/main/LICENSE.md)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v17/main/LICENSE.md)
 [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.Emply.svg)](https://www.nuget.org/packages/Limbo.Umbraco.Emply)
 [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.Emply.svg)](https://www.nuget.org/packages/Limbo.Umbraco.Emply)
 [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.emply)
@@ -10,18 +10,18 @@
 <table>
   <tr>
     <td><strong>License:</strong></td>
-    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v10/main/LICENSE.md"><strong>MIT License</strong></a></td>
+    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v17/main/LICENSE.md"><strong>MIT License</strong></a></td>
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
     <td>
-      Umbraco 10, 11 and 12
+      Umbraco 17
     </td>
   </tr>
   <tr>
     <td><strong>Target Framework:</strong></td>
     <td>
-      .NET 6
+      .NET 10
     </td>
   </tr>
 </table>
@@ -35,18 +35,18 @@
 
 ## Installation
 
-**Umbraco 10+**  
+**Umbraco 17+**  
 
-Version 10 of this package supports Umbraco version 10, 11, and 12. The package is only available via [**NuGet**](https://www.nuget.org/packages/Limbo.Umbraco.Emply).
+Version 17 of this package supports Umbraco version 17. The package is only available via [**NuGet**](https://www.nuget.org/packages/Limbo.Umbraco.Emply).
 
 To install the package, you can use either the .NET CLI:
 
 ```
-dotnet add package Limbo.Umbraco.Emply --version 10.0.0
+dotnet add package Limbo.Umbraco.Emply --version 17.0.0-alpha000
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.Emply -Version 10.0.0
+Install-Package Limbo.Umbraco.Emply -Version 17.0.0-alpha000
 ```

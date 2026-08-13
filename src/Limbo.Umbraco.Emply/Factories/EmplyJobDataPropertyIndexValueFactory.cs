@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Limbo.Integrations.Emply.Models.Postings;
 using Limbo.Umbraco.Emply.Services;
 using Skybrud.Essentials.Json.Newtonsoft;
@@ -15,7 +16,7 @@ public class EmplyJobDataPropertyIndexValueFactory : IPropertyIndexValueFactory 
         _emplyJobsService = emplyJobsService;
     }
 
-    public virtual IEnumerable<KeyValuePair<string, IEnumerable<object?>>> GetIndexValues(IProperty property, string? culture, string? segment, bool published) {
+    public virtual IEnumerable<IndexValue> GetIndexValues(IProperty property, string? culture, string? segment, bool published, IEnumerable<string> availableCultures, IDictionary<Guid, IContentType> contentTypeDictionary) {
 
         // Get the source value from the property
         object? source = property.GetValue(culture, segment, published);
@@ -26,15 +27,19 @@ public class EmplyJobDataPropertyIndexValueFactory : IPropertyIndexValueFactory 
         // Strip the leading underscore if any
         if (json[0] == '_') json = json[1..];
 
-        // Add the property value (XML serialized string) to the index
-        yield return new KeyValuePair<string, IEnumerable<object?>>(property.Alias, new[] { json });
+        // Add the raw JSON value to the index
+        yield return new IndexValue {
+            Culture = culture,
+            FieldName = property.Alias,
+            Values = [json]
+        };
 
         // Parse the raw JSON into an 'EmplyPosting' instance
         EmplyPosting posting = JsonUtils.ParseJsonObject(json, EmplyPosting.Parse);
 
         // Delegate the rest of the work to the jobs service
-        foreach (var pair in _emplyJobsService.GetIndexValues(property, posting, culture, segment, published)) {
-            yield return pair;
+        foreach (IndexValue value in _emplyJobsService.GetIndexValues(property, posting, culture, segment, published)) {
+            yield return value;
         }
 
     }
