@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Limbo.Umbraco.Emply.PropertyEditors;
 using Skybrud.Essentials.Security.Extensions;
 using Umbraco.Cms.Core.Manifest;
 using Umbraco.Cms.Infrastructure.Manifest;
@@ -10,62 +11,60 @@ namespace Limbo.Umbraco.Emply.Manifests;
 
 public class EmplyPackageManifestReader : IPackageManifestReader {
 
+    public static string Alias => EmplyPackage.Alias;
+
+    public static string Name => EmplyPackage.Name;
+
     public Task<IEnumerable<PackageManifest>> ReadPackageManifestsAsync() {
 
-        const string packageAlias = EmplyPackage.Alias;
-
         string cacheBuster = EmplyPackage.InformationalVersion.ToMd5Hash();
-        string packagePath = $"/App_Plugins/{packageAlias}";
 
         IEnumerable<PackageManifest> manifests = [
-            new PackageManifest {
-                Id = packageAlias,
-                Name = EmplyPackage.Name,
+            new() {
+                Id = Alias,
+                Name = Name,
                 AllowTelemetry = true,
                 Version = EmplyPackage.InformationalVersion,
                 Extensions = [
-
                     new {
                         type = "localization",
-                        alias = "Limbo.Umbraco.Emply.Localization.EnUs",
-                        name = "English",
-                        js = $"{packagePath}/Localization/en-US.js?v={cacheBuster}",
+                        alias = $"{Alias}.Localization.EnUs",
+                        name = $"{Name}: English (en-US)",
+                        js = $"/App_Plugins/{Alias}/Localization/en-US.js?v={cacheBuster}",
                         meta = new {
                             culture = "en"
                         }
                     },
-
                     new {
                         type = "localization",
-                        alias = "Limbo.Umbraco.Emply.Localization.DaDk",
-                        name = "Danish",
-                        js = $"{packagePath}/Localization/da-DK.js?v={cacheBuster}",
+                        alias = $"{Alias}.Localization.DaDk",
+                        name = $"{Name}: Danish (da-DK)",
+                        js = $"/App_Plugins/{Alias}/Localization/da-DK.js?v={cacheBuster}",
                         meta = new {
                             culture = "da"
                         }
                     },
-
                     new {
                         type = "icons",
-                        alias = "Limbo.Umbraco.Emply.Icons",
-                        name = "Limbo Emply Icons",
-                        js = $"{packagePath}/Icons.js?v={cacheBuster}"
+                        alias = $"{Alias}.Icons",
+                        name = $"{Name}: Icons",
+                        js = $"/App_Plugins/{Alias}/Icons.js?v={cacheBuster}"
                     },
 
                     new {
                         type = "propertyEditorSchema",
-                        alias = "Limbo.Umbraco.Emply.JobData",
-                        name = "Limbo Emply Job Data",
+                        alias = EmplyJobDataPropertyEditor.EditorAlias,
+                        name = $"{Name}: Job Data Property Editor Schema",
                         meta = new {
-                            defaultPropertyEditorUiAlias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobData"
+                            defaultPropertyEditorUiAlias = EmplyJobDataPropertyEditor.EditorUiAlias
                         }
                     },
 
                     new {
                         type = "propertyEditorUi",
                         alias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobData",
-                        name = "Limbo Emply Job Data Property Editor UI",
-                        element = $"{packagePath}/Elements/JobData.js?v={cacheBuster}",
+                        name = $"{Name}: Job Data Property Editor UI",
+                        element = $"/App_Plugins/{Alias}/Elements/JobData.js?v={cacheBuster}",
                         elementName = "limbo-umbraco-emply-job-data-property-editor",
                         meta = new {
                             label = "Limbo Emply Job Data",
@@ -78,48 +77,48 @@ public class EmplyPackageManifestReader : IPackageManifestReader {
 
                     new {
                         type = "propertyEditorSchema",
-                        alias = "Limbo.Umbraco.Emply.JobId",
-                        name = "Limbo Emply Job ID",
+                        alias = EmplyJobIdPropertyEditor.EditorAlias,
+                        name = $"{Name}: Job ID Property Editor Schema",
                         meta = new {
-                            defaultPropertyEditorUiAlias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobId"
+                            defaultPropertyEditorUiAlias = EmplyJobIdPropertyEditor.EditorUiAlias
                         }
                     },
 
                     new {
                         type = "propertyEditorUi",
-                        alias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobId",
-                        name = "Limbo Emply Job ID Property Editor UI",
-                        element = $"{packagePath}/Elements/JobId.js?v={cacheBuster}",
+                        alias = EmplyJobIdPropertyEditor.EditorUiAlias,
+                        name = $"{Name}: Job ID Property Editor UI",
+                        element = $"/App_Plugins/{Alias}/Elements/JobId.js?v={cacheBuster}",
                         elementName = "limbo-umbraco-emply-job-id-property-editor",
                         meta = new {
                             label = "Limbo Emply Job ID",
                             icon = "icon-limbo-emply",
                             group = "Limbo",
-                            propertyEditorSchemaAlias = "Limbo.Umbraco.Emply.JobId",
+                            propertyEditorSchemaAlias = EmplyJobIdPropertyEditor.EditorAlias,
                             supportsReadOnly = true
                         }
                     },
 
                     new {
                         type = "propertyEditorSchema",
-                        alias = "Limbo.Umbraco.Emply.LastUpdated",
-                        name = "Limbo Emply Last Updated",
+                        alias = EmplyLastUpdatedPropertyEditor.EditorAlias,
+                        name = $"{Name}: Last Updated Property Editor Schema",
                         meta = new {
-                            defaultPropertyEditorUiAlias = "Limbo.Umbraco.Emply.PropertyEditorUi.LastUpdated"
+                            defaultPropertyEditorUiAlias = EmplyLastUpdatedPropertyEditor.EditorUiAlias
                         }
                     },
 
                     new {
                         type = "propertyEditorUi",
-                        alias = "Limbo.Umbraco.Emply.PropertyEditorUi.LastUpdated",
-                        name = "Limbo Emply Last Updated Property Editor UI",
-                        element = $"{packagePath}/Elements/LastUpdated.js?v={cacheBuster}",
+                        alias = EmplyLastUpdatedPropertyEditor.EditorUiAlias,
+                        name = $"{Name}: Last Updated Property Editor UI",
+                        element = $"/App_Plugins/{Alias}/Elements/LastUpdated.js?v={cacheBuster}",
                         elementName = "limbo-umbraco-emply-last-updated-property-editor",
                         meta = new {
                             label = "Limbo Emply Last Updated",
                             icon = "icon-limbo-emply",
                             group = "Limbo",
-                            propertyEditorSchemaAlias = "Limbo.Umbraco.Emply.LastUpdated",
+                            propertyEditorSchemaAlias = EmplyLastUpdatedPropertyEditor.EditorAlias,
                             supportsReadOnly = true
                         }
                     }
