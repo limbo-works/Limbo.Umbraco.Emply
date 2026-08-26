@@ -1,4 +1,5 @@
 using System;
+using Limbo.Umbraco.Emply.Exceptions;
 using Limbo.Umbraco.Emply.Factories;
 using Limbo.Umbraco.Emply.Manifests;
 using Limbo.Umbraco.Emply.Models.Settings;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Skybrud.Essentials.Configuration;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Strings.Extensions;
-using Skybrud.Essentials.Time.Iso8601;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Infrastructure.Manifest;
@@ -80,19 +80,20 @@ public class EmplyComposer : IComposer {
 
         settings.Scheduling.Enabled = scheduling.GetSection("Enabled").Value.ToBoolean(true);
 
-        string? delay = scheduling.GetSection("Delay").Value;
-        string? interval = scheduling.GetSection("Interval").Value;
-
-        if (int.TryParse(delay, out int delayMinutes)) {
-            settings.Scheduling.Delay = TimeSpan.FromMinutes(delayMinutes);
-        } else if (Iso8601Utils.TryParseDuration(delay, out TimeSpan delayTimeSpan)) {
-            settings.Scheduling.Delay = delayTimeSpan;
+        if (scheduling.TryGetString("Delay", out string? result)) {
+            try {
+                settings.Scheduling.Delay = EmplyUtils.ParseTimeSpan(result);
+            } catch (Exception ex) {
+                throw new EmplyException($"Invalid value specified for '{scheduling.Path}:Delay': {result}", ex);
+            }
         }
 
-        if (int.TryParse(interval, out int internalMinutes)) {
-            settings.Scheduling.Interval = TimeSpan.FromMinutes(internalMinutes);
-        } else if (Iso8601Utils.TryParseDuration(interval, out TimeSpan internalTimeSpan)) {
-            settings.Scheduling.Interval = internalTimeSpan;
+        if (scheduling.TryGetString("Interval", out result)) {
+            try {
+                settings.Scheduling.Delay = EmplyUtils.ParseTimeSpan(result);
+            } catch (Exception ex) {
+                throw new EmplyException($"Invalid value specified for '{scheduling.Path}:Interval': {result}", ex);
+            }
         }
 
     }
