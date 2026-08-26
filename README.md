@@ -1,6 +1,6 @@
 ﻿# Limbo Emply
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v10/main/LICENSE.md)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v13/main/LICENSE.md)
 [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.Emply.svg)](https://www.nuget.org/packages/Limbo.Umbraco.Emply)
 [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.Emply.svg)](https://www.nuget.org/packages/Limbo.Umbraco.Emply)
 [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.emply)
@@ -10,7 +10,7 @@
 <table>
   <tr>
     <td><strong>License:</strong></td>
-    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v10/main/LICENSE.md"><strong>MIT License</strong></a></td>
+    <td><a href="https://github.com/limbo-works/Limbo.Umbraco.Emply/blob/v13/main/LICENSE.md"><strong>MIT License</strong></a></td>
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
@@ -42,11 +42,11 @@ Version 13 of this package supports Umbraco version 13. The package is only avai
 To install the package, you can use either the .NET CLI:
 
 ```
-dotnet add package Limbo.Umbraco.Emply --version 13.0.0-alpha001
+dotnet add package Limbo.Umbraco.Emply --version 13.0.0
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.Emply -Version 13.0.0-alpha001
+Install-Package Limbo.Umbraco.Emply -Version 13.0.0
 ```
