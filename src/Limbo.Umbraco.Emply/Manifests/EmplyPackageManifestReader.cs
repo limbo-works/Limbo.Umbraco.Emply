@@ -62,7 +62,7 @@ public class EmplyPackageManifestReader : IPackageManifestReader {
 
                     new {
                         type = "propertyEditorUi",
-                        alias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobData",
+                        alias = EmplyJobDataPropertyEditor.EditorUiAlias,
                         name = $"{Name}: Job Data Property Editor UI",
                         element = $"/App_Plugins/{Alias}/Elements/JobData.js?v={cacheBuster}",
                         elementName = "limbo-umbraco-emply-job-data-property-editor",
@@ -70,7 +70,7 @@ public class EmplyPackageManifestReader : IPackageManifestReader {
                             label = "Limbo Emply Job Data",
                             icon = "icon-limbo-emply",
                             group = "Limbo",
-                            propertyEditorSchemaAlias = "Limbo.Umbraco.Emply.JobData",
+                            propertyEditorSchemaAlias = EmplyJobDataPropertyEditor.EditorAlias,
                             supportsReadOnly = true
                         }
                     },
