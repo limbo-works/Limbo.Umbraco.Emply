@@ -18,6 +18,7 @@ using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Time;
 using Skybrud.Essentials.Umbraco.Search.Indexing;
+using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Extensions;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -28,12 +29,14 @@ namespace Limbo.Umbraco.Emply.Services;
 public class EmplyJobsService {
 
     private readonly EmplySettings _settings;
+    private readonly IOptions<LoggingSettings> _loggingSettings;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IContentTypeService _contentTypeService;
     private readonly IContentService _contentService;
 
-    public EmplyJobsService(IOptions<EmplySettings> settings, IWebHostEnvironment webHostEnvironment, IContentTypeService contentTypeService, IContentService contentService) {
+    public EmplyJobsService(IOptions<EmplySettings> settings, IOptions<LoggingSettings> loggingSettings, IWebHostEnvironment webHostEnvironment, IContentTypeService contentTypeService, IContentService contentService) {
         _settings = settings.Value;
+        _loggingSettings = loggingSettings;
         _webHostEnvironment = webHostEnvironment;
         _contentTypeService = contentTypeService;
         _contentService = contentService;
@@ -146,7 +149,7 @@ public class EmplyJobsService {
 
             // Get all job pages from the content cache
             IEnumerable<IContent> children = _contentService
-                .GetPagedChildren(parent.Id, 0, int.MaxValue, out long _);
+                .GetPagedChildren(parent.Id, 0, int.MaxValue, out long _, null, null, null);
 
             // Iterate through the
             foreach (IContent content in children) {
@@ -287,7 +290,7 @@ public class EmplyJobsService {
     /// <param name="job">The job.</param>
     public virtual void WriteToLog(EmplyImportResult job) {
 
-        string path = Path.Combine(global::Umbraco.Cms.Core.Constants.SystemDirectories.LogFiles, EmplyPackage.Alias, $"{DateTime.UtcNow:yyyyMMddHHmmss}.json");
+        string path = Path.Combine(_loggingSettings.Value.Directory, EmplyPackage.Alias, $"{DateTime.UtcNow:yyyyMMddHHmmss}.json");
 
         string fullPath = _webHostEnvironment.MapPathContentRoot(path);
 
