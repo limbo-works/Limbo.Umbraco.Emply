@@ -12,7 +12,7 @@ public class EmplyJobDataPropertyEditor : DataEditor {
 
     public const string EditorAlias = "Limbo.Umbraco.Emply.JobData";
 
-    public const string EditorUiAlias = $"{EditorAlias}.Ui";
+    public const string EditorUiAlias = "Limbo.Umbraco.Emply.PropertyEditorUi.JobData";
 
     #endregion
 

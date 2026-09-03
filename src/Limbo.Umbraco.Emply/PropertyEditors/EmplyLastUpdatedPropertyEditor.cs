@@ -9,7 +9,7 @@ public class EmplyLastUpdatedPropertyEditor : DataEditor {
 
     public const string EditorAlias = "Limbo.Umbraco.Emply.LastUpdated";
 
-    public const string EditorUiAlias = $"{EditorAlias}.Ui";
+    public const string EditorUiAlias = "Limbo.Umbraco.Emply.PropertyEditorUi.LastUpdated";
 
     #endregion
 
