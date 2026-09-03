@@ -16,7 +16,7 @@ public class EmplySourceSettings {
     public EmplySourceSettings(string customerName, string? apiKey, string? parentContentKey, string contentTypeAlias) {
         CustomerName = customerName;
         ApiKey = apiKey.NullIfWhiteSpace();
-        if (!Guid.TryParse(parentContentKey, out Guid parentContentKeyGuid)) throw new ArgumentException("Value is not a valid GUID.", nameof(parentContentKeyGuid));
+        if (!Guid.TryParse(parentContentKey, out Guid parentContentKeyGuid)) throw new ArgumentException("Value is not a valid GUID.", nameof(parentContentKey));
         ParentContentKey = parentContentKeyGuid;
         ContentTypeAlias = contentTypeAlias;
     }
