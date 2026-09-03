@@ -1,5 +1,4 @@
 using System;
-using Limbo.Umbraco.Emply.Exceptions;
 using Limbo.Umbraco.Emply.Factories;
 using Limbo.Umbraco.Emply.Manifests;
 using Limbo.Umbraco.Emply.Models.Settings;
@@ -79,22 +78,8 @@ public class EmplyComposer : IComposer {
         IConfigurationSection scheduling = section.GetSection("Scheduling");
 
         settings.Scheduling.Enabled = scheduling.GetSection("Enabled").Value.ToBoolean(true);
-
-        if (scheduling.TryGetString("Delay", out string? result)) {
-            try {
-                settings.Scheduling.Delay = EmplyUtils.ParseTimeSpan(result);
-            } catch (Exception ex) {
-                throw new EmplyException($"Invalid value specified for '{scheduling.Path}:Delay': {result}", ex);
-            }
-        }
-
-        if (scheduling.TryGetString("Interval", out result)) {
-            try {
-                settings.Scheduling.Delay = EmplyUtils.ParseTimeSpan(result);
-            } catch (Exception ex) {
-                throw new EmplyException($"Invalid value specified for '{scheduling.Path}:Interval': {result}", ex);
-            }
-        }
+        settings.Scheduling.Delay = scheduling.GetTimeSpan("Delay", settings.Scheduling.Delay);
+        settings.Scheduling.Interval = scheduling.GetTimeSpan("Interval", settings.Scheduling.Interval);
 
     }
 

@@ -17,7 +17,7 @@ public class EmplyLastUpdatedValueConverter : PropertyValueConverterBase {
     }
 
     public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {
-        return inter is string str ? EssentialsTime.FromIso8601(str) : null;
+        return inter is string str ? EssentialsTime.ParseIso8601(str) : null;
     }
 
     public override Type GetPropertyValueType(IPublishedPropertyType propertyType) {
